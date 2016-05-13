@@ -67,7 +67,7 @@ def plot(x, y, y2, coeff):
 	plt.grid(True)
 	plt.show()
 
-# Only run as scritp
+# Only run if a scritp
 if __name__ == "__main__":
 	
 	x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
