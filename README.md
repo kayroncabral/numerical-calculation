@@ -1,1 +1,3 @@
-# numerical-calculation
+# Numerical Calculation
+
+* Linear fit
