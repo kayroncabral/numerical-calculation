@@ -70,7 +70,7 @@ def plot(x, y, y2, coeff):
 # Only run if a scritp
 if __name__ == "__main__":
 	
-	x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	x = np.arange(1, 11)
 	y = [2.9, 4.8, 7.2, 9, 11.3, 12.5, 15.1, 16.9, 19, 20.3]
 
 	matrix = buildMatrix(x, y)
