@@ -93,7 +93,7 @@ def main(argv):
 		linearFit = yAxis(x, coeff)
 		plot(x, y, linearFit, coeff, function)
 	else:
-		print("{} <Xo,Xn> <function>".format(sys.argv[0]))
+		print("{} <start,stop> <function>".format(sys.argv[0]))
 
 # Only run if a scritp
 if __name__ == "__main__":
