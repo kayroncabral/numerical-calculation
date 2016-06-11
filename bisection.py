@@ -4,9 +4,8 @@ from math import *
 import sys
 
 # Creates X axis
-def xAxis(high, lower, interval):
-	h = (high - lower) / interval
-	return np.arange(array[0], array[1], h)
+def xAxis(high, lower, h):
+	return np.arange(lower, high, h)
 
 # Creates y axis
 def yAxis(xAxis, function):
@@ -18,6 +17,7 @@ def yAxis(xAxis, function):
 # Returns de midpoint
 def bisection(y, a, b, iterations):
 	count = 0
+	xm = (a + b) / 2
 	while count < iterations:
 		xm = (a + b) / 2
 		if y[a] * y[xm] < 0:
@@ -39,8 +39,8 @@ def plot(x, y, xm, function):
 def main(argv):
 	if len(argv) == 3:
 		iterations = int(argv[0])
-        range = np.fromstring(argv[1], dtype = float, sep = ',')
-        x = xAxis(, iterations)
+		range = np.fromstring(argv[1], dtype = float, sep = ',')
+		x = xAxis(range[1], range[0], range[2])
 		function = argv[2]
 		y = yAxis(x, function)
 
@@ -48,10 +48,9 @@ def main(argv):
 		b = len(x) - 1
 
 		xm = bisection(y, a, b, iterations)
-
 		plot(x, y, xm, function)
 	else:
-		print("{} <iteration> <Xmin,Xmax> <function>".format(sys.argv[0]))
+		print("{} <iteration> <Xmin,Xmax,h> <function>".format(sys.argv[0]))
 
 # Only run if a scritp
 if __name__ == "__main__":

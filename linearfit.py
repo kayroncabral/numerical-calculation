@@ -1,5 +1,7 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from math import *
+import sys
 
 # matrix triangulating
 def triangulating(matrix):
@@ -13,7 +15,7 @@ def triangulating(matrix):
 			for colum in range(columns):
 				if line == 0:
 					matrix[line, colum] = matrix[line, colum] / head
-	
+
 	# Turns matrix in upper triangular
 	pivot = matrix[0,0]
 	for line in range(1, lines):
@@ -48,18 +50,29 @@ def buildMatrix(x, y):
 # find the matrix coefficients
 def coefficients(matrix):
 	b = matrix[matrix.shape[0] - 1, matrix.shape[1] - 1]
-	a = (matrix[matrix.shape[0] - 2, matrix.shape[1] - 1]) - (b * matrix[matrix.shape[0] - 2, matrix.shape[1] - 2])	
+	a = (matrix[matrix.shape[0] - 2, matrix.shape[1] - 1]) - (b * matrix[matrix.shape[0] - 2, matrix.shape[1] - 2])
 	return (a, b)
+
+# Creates X axis
+def xAxis(high, lower):
+	return np.arange(lower, high)
 
 # creates the y axis linear adjustment
 def yAxis(xAxix, coeff):
 	array = []
-	for index in range(len(xAxix)):
-		array.append(coeff[0] * xAxix[index] + coeff[1])
+	for x in xAxix:
+		array.append(coeff[0] * x + coeff[1])
+	return array
+
+# Creates y axis
+def fx(xPoints, function):
+	array = []
+	for x in xPoints:
+		array.append(eval(function))
 	return array
 
 # plot the graph
-def plot(x, y, y2, coeff):
+def plot(x, y, y2, coeff, function):
 	plt.plot(x, y, 'ro', x, y2, 'b--')
 	plt.title('Ajuste Linear\ny = {}x + {}'.format(coeff[0], coeff[1]))
 	plt.xlabel('x')
@@ -67,15 +80,21 @@ def plot(x, y, y2, coeff):
 	plt.grid(True)
 	plt.show()
 
+def main(argv):
+	if len(argv) == 2:
+		range = np.fromstring(argv[0], dtype = float, sep = ',')
+		x = np.arange(range[0], range[1])
+		function = argv[1]
+		y = fx(x, function)
+
+		matrix = buildMatrix(x, y)
+		matrix = triangulating(matrix)
+		coeff = coefficients(matrix)
+		linearFit = yAxis(x, coeff)
+		plot(x, y, linearFit, coeff, function)
+	else:
+		print("{} <Xo,Xn> <function>".format(sys.argv[0]))
+
 # Only run if a scritp
 if __name__ == "__main__":
-	
-	x = np.arange(1, 11)
-	y = [2.9, 4.8, 7.2, 9, 11.3, 12.5, 15.1, 16.9, 19, 20.3]
-
-	matrix = buildMatrix(x, y)
-	matrix = triangulating(matrix)
-	coeff = coefficients(matrix)
-	yAxis = yAxis(xAxix = x, coeff = coeff)
-	plot(x, y, yAxis, coeff)
-
+	main(sys.argv[1:])
