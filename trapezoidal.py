@@ -4,8 +4,8 @@ from math import *
 import sys
 
 # Calculates height
-def height(high, lower, interval):
-	return (high - lower) / interval
+def height(high, lower, iteration):
+	return (high - lower) / iteration
 
 # Creates X axis
 def xAxis(high, lower, height):
@@ -22,11 +22,11 @@ def yAxis(xAxis, function):
 def area(yAxis, h):
 	area = 0.0
 	for index in range(1, len(yAxis)):
-		area += ((yAxis[index - 1] + yAxis[index]) * h) / 2
+		area += ((abs(yAxis[index - 1]) + abs(yAxis[index])) * h) / 2
 	return area
 
 # plot the graph
-def plot(xAxis, yAxis, function, interval, h):
+def plot(xAxis, yAxis, function, iteration, h):
 	plt.plot(xAxis, yAxis, 'ro', xAxis, yAxis, 'b')
 
 	# Draw vertical and diagonal lines
@@ -34,7 +34,7 @@ def plot(xAxis, yAxis, function, interval, h):
 		plt.plot([xAxis[index - 1], xAxis[index]], [yAxis[index - 1], yAxis[index]], 'r--')
 		plt.plot([xAxis[index], xAxis[index]], [0, yAxis[index]], 'r--')
 
-	plt.title('Bisection Method\nf(x) = {}; intervalos = {}; area total = {}'.format(function, interval, area(yAxis, h)))
+	plt.title('Trapezoidal Rule\nf(x) = {}; intervalos = {}; area total = {}'.format(function, iteration, area(yAxis, h)))
 	plt.xlabel('x')
 	plt.ylabel('y')
 	plt.grid(True)
@@ -42,18 +42,18 @@ def plot(xAxis, yAxis, function, interval, h):
 
 def main(argv):
 	if len(argv) == 3:
-		interval = int(argv[0])
+		iteration = int(argv[0])
 		range = np.fromstring(argv[1], dtype = float, sep = ',')
 		lower = range[0]
 		high = range[1]
 		function = argv[2]
 
-		h = height(high, lower, interval)
+		h = height(high, lower, iteration)
 		x = xAxis(high,lower, h)
 		y = yAxis(x, function)
-		plot(x, y, function, interval, h)
+		plot(x, y, function, iteration, h)
 	else:
-		print("{} <iteration> <Xmin,Xmax> <function>".format(sys.argv[0]))
+		print("{} <iteration> <start,stop> <function>".format(sys.argv[0]))
 # Only run if a scritp
 if __name__ == "__main__":
 	main(sys.argv[1:])
