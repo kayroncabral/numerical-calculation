@@ -28,9 +28,9 @@ def bisection(y, a, b, iterations):
 	return xm
 
 # plot the graph
-def plot(x, y, xm, function):
+def plot(x, y, xm, iteration, function):
 	plt.plot(x, y, 'r--', x[xm], y[xm], 'ro')
-	plt.title('Bisection Method\nf(x) = {}; xm = {}'. format(function, y[xm]))
+	plt.title('Bisection Method\nf(x) = {}; intervalos = {}; xm = {}'. format(function, iteration, y[xm]))
 	plt.xlabel('x')
 	plt.ylabel('y')
 	plt.grid(True)
@@ -38,7 +38,7 @@ def plot(x, y, xm, function):
 
 def main(argv):
 	if len(argv) == 3:
-		iterations = int(argv[0])
+		iteration = int(argv[0])
 		range = np.fromstring(argv[1], dtype = float, sep = ',')
 		x = xAxis(range[1], range[0], range[2])
 		function = argv[2]
@@ -47,10 +47,10 @@ def main(argv):
 		a = 0
 		b = len(x) - 1
 
-		xm = bisection(y, a, b, iterations)
-		plot(x, y, xm, function)
+		xm = bisection(y, a, b, iteration)
+		plot(x, y, xm, iteration, function)
 	else:
-		print("{} <iteration> <Xmin,Xmax,h> <function>".format(sys.argv[0]))
+		print("{} <iteration> <start,stop,distance> <function>".format(sys.argv[0]))
 
 # Only run if a scritp
 if __name__ == "__main__":
